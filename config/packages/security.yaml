@@ -5,13 +5,13 @@ security:
             memory:
                   users:
                       jason:
-                          password: jason
+                          password: $2y$13$y27hJV9XA7rMdIqNv6AQguA2TyngpuymhO2j4KRAffUW8ejdLQ/Ue
                           roles: 'ROLE_USER'
                       admin:
-                          password: admin
+                          password: $2y$13$NEK6Ibk1i3jwpcFqzsEMruPt7UEOgyKSsEh9cvXFgECRWEOqlgJmy
                           roles: 'ROLE_ADMIN'
     encoders:
-      Symfony\Component\Security\Core\User\User: plaintext
+      Symfony\Component\Security\Core\User\User: bcrypt
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -22,19 +22,11 @@ security:
             anonymous: true
             json_login:
                 check_path: /api/login_check
-                username_path: security.credentials.login
+                username_path: security.credentials.username
                 password_path: security.credentials.password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
-       
-            #form_login:
-            #    check_path:               /api/login_check
-             #   success_handler:          lexik_jwt_authentication.handler.authentication_success
-              #  failure_handler:          lexik_jwt_authentication.handler.authentication_failure
-             #   require_previous_session: false
-
-
         api:
             pattern:   ^/api
             stateless: true
